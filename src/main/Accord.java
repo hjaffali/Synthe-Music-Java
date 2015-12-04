@@ -44,7 +44,6 @@ public class Accord {
 	 * 
 	 */
 	public void play() {
-		
-		// TODO Auto-generated method stub
+		StdAudio.play(this.signal);
 	}
 }

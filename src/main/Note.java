@@ -68,7 +68,6 @@ public class Note {
 	 * @return
 	 */
 	private static double freqTone(String toneBase, char alter, int octave) {
-
 		//On repère déjà on est dans quelle octave comme ça on peut trouver le f0.
 		double f0 = Note.fondFreq[octave];
 		
@@ -114,9 +113,18 @@ public class Note {
 				tonaliteBase = tonaliteBase.concat(""+tonalite.charAt(i));
 			}
 		}
-
-
-		return null;
+		
+		Note note = new Note(tonaliteBase, alteration, octave, duree, amplitude);
+		
+		if(harmon) {
+			for (int i=0; i<note.signal.length; i++) {
+				note.signal[i] += (note.amp/4f) * Math.sin(2 * Math.PI * i * (0.5*note.freq) / Note.echantillonageFreq);
+				note.signal[i] += (note.amp/4f) * Math.sin(2 * Math.PI * i * (2*note.freq) / Note.echantillonageFreq);
+				note.signal[i] += (note.amp/8f) * Math.sin(2 * Math.PI * i * (3*note.freq) / Note.echantillonageFreq);
+			}
+		}
+		
+		return note;
 	}
 
 	/**
