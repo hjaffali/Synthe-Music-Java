@@ -97,8 +97,22 @@ public class Note {
 	 * @return
 	 */
 	public static double faceToDuration(String figure, int tempo) {
-		// TODO Auto-generated method stub
-		return 0;
+		double dureeNoire = tempo/60f ;
+
+		switch(figure) {
+			case("double-croche") :
+				return dureeNoire/4f;
+			case("croche") :
+				return dureeNoire/2f;
+			case("noire") :
+				return dureeNoire;
+			case("blanche") :
+				return dureeNoire*2;
+			case("ronde") :
+				return dureeNoire*4;
+			default :
+				return 0;
+		}
 	}
 
 
