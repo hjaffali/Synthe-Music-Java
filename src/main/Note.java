@@ -94,6 +94,7 @@ public class Note {
 	 * @param harmon
 	 * @return
 	 */
+	//FIXME : Il peut y a avoir un soucis ici, à vérifier, lorsqu'on ajoute les harmoniques
 	public static Note sToNote(String tonalite, double amplitude, double duree, boolean harmon) {
 		int octave;
 		char alteration;
