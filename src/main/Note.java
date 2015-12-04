@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Arrays;
+
 @SuppressWarnings({"nls","hiding"})
 public class Note {
 
@@ -68,12 +70,21 @@ public class Note {
 	private static double freqTone(String toneBase, char alter, int octave) {
 
 		//On repère déjà on est dans quelle octave comme ça on peut trouver le f0.
+		double f0 = Note.fondFreq[octave];
+		
 		//Ensuite on regarde on est à quelle note, comme ça on sait on est à quelle hauteur potentielle
+		int n = Note.haut[Arrays.asList(Note.tons).indexOf(toneBase)];
+		
 		//Enfin on regarde si il y a un dièze/bémole pour ajouter/enlever une hauteur.
+		if(alter=='#') {
+			n = n+1;
+		} 
+		else if (alter=='b') {
+			n = n-1;
+		}
 
 		//Ensuite pour calculer la férquence, on prend f0, et n, la hauteur, et on applique la formule.
-
-		return 0;
+		return f0 * Math.pow(2, n / 12.0);
 	}
 
 	/**
@@ -85,7 +96,25 @@ public class Note {
 	 * @return
 	 */
 	public static Note sToNote(String tonalite, double amplitude, double duree, boolean harmon) {
-		// TODO Auto-generated method stub
+		int octave;
+		char alteration;
+		String tonaliteBase="";
+
+		if(tonalite.charAt(tonalite.length()-1)=='b' || tonalite.charAt(tonalite.length()-1)=='#') {
+			alteration=tonalite.charAt(tonalite.length()-1);
+			octave=Integer.valueOf(tonalite.charAt(tonalite.length()-2)).intValue();
+			for(int i=0; i<tonalite.length()-2;i++) {
+				tonaliteBase = tonaliteBase.concat(""+tonalite.charAt(i));
+			}
+		}
+		else {
+			alteration=' ';
+			octave=Integer.valueOf(tonalite.charAt(tonalite.length()-1)).intValue();
+			for(int i=0; i<tonalite.length()-1;i++) {
+				tonaliteBase = tonaliteBase.concat(""+tonalite.charAt(i));
+			}
+		}
+
 
 		return null;
 	}
@@ -100,18 +129,18 @@ public class Note {
 		double dureeNoire = tempo/60f ;
 
 		switch(figure) {
-			case("double-croche") :
-				return dureeNoire/4f;
-			case("croche") :
-				return dureeNoire/2f;
-			case("noire") :
-				return dureeNoire;
-			case("blanche") :
-				return dureeNoire*2;
-			case("ronde") :
-				return dureeNoire*4;
-			default :
-				return 0;
+		case("double-croche") :
+			return dureeNoire/4f;
+		case("croche") :
+			return dureeNoire/2f;
+		case("noire") :
+			return dureeNoire;
+		case("blanche") :
+			return dureeNoire*2;
+		case("ronde") :
+			return dureeNoire*4;
+		default :
+			return 0;
 		}
 	}
 
