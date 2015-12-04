@@ -1,12 +1,8 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 /******************************************************************************
  *  Compilation:  javac Synthe.java
@@ -16,7 +12,7 @@ import java.util.Scanner;
  *
  *
  ******************************************************************************/
-
+@SuppressWarnings({"nls","hiding","resource"})
 public class Synthe {
 
 	/**
@@ -44,13 +40,13 @@ public class Synthe {
 			System.exit(-1);
 		}
 
-		tempo = Integer.parseInt(args[1]);
+		Synthe.tempo = Integer.parseInt(args[1]);
 
 		if (args.length == 3) {
 			if (args[2].equals("harm")) 
-				harm = true ;
+				Synthe.harm = true ;
 			else if (args[2].equals("guitar")) 
-				guitar = true ;
+				Synthe.guitar = true ;
 		}
 
 		try {
@@ -58,7 +54,7 @@ public class Synthe {
 			String ligne;
 
 			while ((ligne = fichier.readLine()) != null) {
-				playLigne(ligne, harm, guitar);
+				playLigne(ligne, Synthe.harm, Synthe.guitar);
 			}
 
 			fichier.close();
@@ -83,7 +79,7 @@ public class Synthe {
 		
 		//On récupère les deux derniers éléments de la ligne, la durée et l'amplitude
 		double amplitude = Integer.parseInt(tokens[tokens.length-1]);
-		double duree = Note.faceToDuration(tokens[tokens.length-2], tempo);
+		double duree = Note.faceToDuration(tokens[tokens.length-2], Synthe.tempo);
 		
 		//On ajoute la première note de la ligne à l'accord
 		Accord accord = new Accord(Note.sToNote(tokens[0], amplitude, duree, harm));

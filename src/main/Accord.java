@@ -22,7 +22,6 @@ public class Accord {
 	 * @param note1
 	 */
 	public Accord(Note note1) {
-		int i;
 		this.notes = new Note[4] ;
 		this.notes[0] = new Note(note1) ;
 		this.notes[1] = null ;

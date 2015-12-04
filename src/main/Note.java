@@ -1,5 +1,6 @@
 package main;
 
+@SuppressWarnings({"nls","hiding"})
 public class Note {
 
 	/**
@@ -16,7 +17,7 @@ public class Note {
 	 * 
 	 */
 	public final static int[] haut = {0, 2, 4, 5, 7, 9, 11};
-	
+
 	/**
 	 * 
 	 */
@@ -69,9 +70,9 @@ public class Note {
 		//On repère déjà on est dans quelle octave comme ça on peut trouver le f0.
 		//Ensuite on regarde on est à quelle note, comme ça on sait on est à quelle hauteur potentielle
 		//Enfin on regarde si il y a un dièze/bémole pour ajouter/enlever une hauteur.
-		
+
 		//Ensuite pour calculer la férquence, on prend f0, et n, la hauteur, et on applique la formule.
-		
+
 		return 0;
 	}
 
@@ -101,8 +102,7 @@ public class Note {
 	}
 
 
-	/**
-	 * Le constructeur permettant de déclarer/allouer une note par
+	/** Le constructeur permettant de déclarer/allouer une note par
 	 * Note note = new Note(ton, alter, octave, duree, amplitude);
 	 * 
 	 * @param tB
@@ -118,14 +118,14 @@ public class Note {
 		this.octave = oct ;
 		this.freq = freqTone(this.toneBase, this.alter, this.octave) ;
 		this.amp = amp;
-		
-		//Ici la définition de **signal**
-		int i=0;
-		double t=0;
-		while(t<dur) {
-			this.signal[i]=amp*Math.sin(2*Math.PI*this.freq*t);
-			i++;
-			t+=1/Note.echantillonageFreq;
+
+		//On calcule la taille de l'échantillon
+		int N = (int) (StdAudio.SAMPLE_RATE * this.duree);
+		//On alloue la mémoire pour le tableau de signal
+		this.signal = new double[N+1];
+		//On remplit le tableau conformément à la formule du signal
+		for (int i=0; i<=N; i++) {
+			this.signal[i] = amp * Math.sin(2 * Math.PI * i * this.freq / Note.echantillonageFreq);
 		}
 	}
 
@@ -151,8 +151,7 @@ public class Note {
 	}
 
 
-	/**
-	 * méthode main() de test de la classe Note
+	/** Méthode main() de test de la classe Note
 	 * 
 	 * @param args
 	 */
@@ -163,7 +162,7 @@ public class Note {
 			Note not = new Note(Note.tons[i], ' ', oct, 1.0, 1.0);
 			System.out.print(not.toneBase + ", octave " + not.octave
 					+ "  f0 =" + Note.fondFreq[not.octave] + "Hz, F =");
-			System.out.format("%.2f Hz%n",not.freq);
+			System.out.format("%.2f Hz%n",Double.valueOf(not.freq));
 			not.play();
 		}
 	}
