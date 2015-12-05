@@ -2,7 +2,8 @@ package main;
 
 import java.util.Arrays;
 
-@SuppressWarnings({"nls","hiding"})
+
+@SuppressWarnings({"nls"})
 public class Note {
 
 	/**
@@ -67,6 +68,8 @@ public class Note {
 	 * @param octave
 	 * @return
 	 */
+	
+	//Fonctionne
 	private static double freqTone(String toneBase, char alter, int octave) {
 		//On repère déjà on est dans quelle octave comme ça on peut trouver le f0.
 		double f0 = Note.fondFreq[octave];
@@ -149,6 +152,7 @@ public class Note {
 		case("ronde") :
 			return dureeNoire*4;
 		default :
+			System.err.println("Figure inconnue");
 			return 0;
 		}
 	}
@@ -163,6 +167,7 @@ public class Note {
 	 * @param dur
 	 * @param amp
 	 */
+	//Fonctionne
 	public Note(String tB, char alt, int oct, double dur, double amp){
 		this.duree = dur ;
 		this.alter = alt ;
@@ -177,7 +182,7 @@ public class Note {
 		this.signal = new double[N+1];
 		//On remplit le tableau conformément à la formule du signal
 		for (int i=0; i<=N; i++) {
-			this.signal[i] = amp * Math.sin(2 * Math.PI * i * this.freq / Note.echantillonageFreq);
+			this.signal[i] = amp * Math.sin(2 * Math.PI * this.freq *(i / Note.echantillonageFreq));
 		}
 	}
 
@@ -198,6 +203,7 @@ public class Note {
 	/**
 	 * 
 	 */
+	//Fontionne
 	public void play() {
 		StdAudio.play(this.signal);
 	}
