@@ -99,20 +99,20 @@ public class Note {
 	 */
 	//FIXME : Il peut y a avoir un soucis ici, à vérifier, lorsqu'on ajoute les harmoniques
 	public static Note sToNote(String tonalite, double amplitude, double duree, boolean harmon) {
-		int octave;
-		char alteration;
+		int octave=0;
+		char alteration=' ';
 		String tonaliteBase="";
 
 		if(tonalite.charAt(tonalite.length()-1)=='b' || tonalite.charAt(tonalite.length()-1)=='#') {
 			alteration=tonalite.charAt(tonalite.length()-1);
-			octave=Integer.valueOf(tonalite.charAt(tonalite.length()-2)).intValue();
+			octave=Integer.valueOf(""+tonalite.charAt(tonalite.length()-2)).intValue();
 			for(int i=0; i<tonalite.length()-2;i++) {
 				tonaliteBase = tonaliteBase.concat(""+tonalite.charAt(i));
 			}
 		}
 		else {
 			alteration=' ';
-			octave=Integer.valueOf(tonalite.charAt(tonalite.length()-1)).intValue();
+			octave=Integer.valueOf(""+tonalite.charAt(tonalite.length()-1)).intValue();
 			for(int i=0; i<tonalite.length()-1;i++) {
 				tonaliteBase = tonaliteBase.concat(""+tonalite.charAt(i));
 			}

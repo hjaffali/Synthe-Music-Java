@@ -35,6 +35,11 @@ public class Synthe {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		args = new String[3];
+		args[0]="C:\\Users\\Angélique\\git\\Synthe-Music-Java\\src\\main\\partitionTest.txt";
+		args[1]="50";
+		args[2]="harm";
+		
 		if (args.length < 2) {
 			System.out.println("Usage : java Synthe <fichier> <tempo> <harm/guitar>");
 			System.exit(-1);
@@ -76,17 +81,17 @@ public class Synthe {
 		//On récupère chaque élément de la ligne entre chaque virgule
 		String delims = "[,]";
 		String [] tokens = ligne.split(delims);
-		
+
 		//On récupère les deux derniers éléments de la ligne, la durée et l'amplitude
-		double amplitude = Integer.parseInt(tokens[tokens.length-1]);
+		double amplitude = Double.parseDouble(tokens[tokens.length-1]);
 		double duree = Note.faceToDuration(tokens[tokens.length-2], Synthe.tempo);
 		
 		//On ajoute la première note de la ligne à l'accord
-		Accord accord = new Accord(Note.sToNote(tokens[0], amplitude, duree, harm));
+		Accord accord = new Accord(Note.sToNote(tokens[0], amplitude, duree, (harm || guitar)));
 		
 		//S'il y a d'autres notes sur la ligne, on les ajoute à l'accord
 		for (int i=1;i<tokens.length-2;i++) {
-			accord.addNote(Note.sToNote(tokens[i], amplitude, duree, harm));
+			accord.addNote(Note.sToNote(tokens[i], amplitude, duree, (harm || guitar)));
 		}
 		
 		//Enfin, on joue l'accord
