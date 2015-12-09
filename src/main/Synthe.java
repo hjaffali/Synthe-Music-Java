@@ -31,20 +31,12 @@ public class Synthe {
 	 * 
 	 */
 	public static boolean guitar = false ;
-	
-	/* Liste et tableau pour record la partition dans un fichier */
-	public static ArrayList<Accord> list = new ArrayList<>();
-	public static double [] array;
 
 	/**
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		args = new String[2];
-		args[0]="C:\\Users\\Angélique\\git\\Synthe-Music-Java\\src\\main\\partitionTest.txt";
-		args[1]="50";
-		//args[2]="harm";
 		
 		if (args.length < 2) {
 			System.out.println("Usage : java Synthe <fichier> <tempo> <harm/guitar>");
@@ -73,20 +65,6 @@ public class Synthe {
 			ex.printStackTrace(); 
 		}
 		
-		int taille=0;
-		for(Accord a:list) {
-			taille+=a.signal.length;
-		}
-		Synthe.array = new double[taille];
-		int i=0;
-		for(Accord a:list) {
-			for(double d:a.signal) {
-				Synthe.array[i]=d;
-				i++;
-			}	
-		}
-		StdAudio.save("musique_mystere.wav", array);
-
 		System.exit(0);
 	}
 
@@ -114,7 +92,6 @@ public class Synthe {
 			accord.addNote(Note.sToNote(tokens[i], amplitude, duree, (harm || guitar)));
 		}
 		
-		list.add(accord);
 		//Enfin, on joue l'accord
 		accord.play();
 	}
