@@ -2,27 +2,22 @@ package main;
 
 public class Accord {
 
-	/**
-	 * 
-	 */
+	/** Tableau contenant toutes les notes de l'accord (4 au maximum) */
 	Note[] notes ;
 	
-	/**
-	 * 
-	 */
+	/** Nombre de notes presentes dans l'accord */
+	int nbNotes = 0;
+	
+	/** Duree de l'accord en secondes */
 	double duree ;
 	
-	/**
-	 * 
-	 */
+	/** Signal correspondant a la moyenne des signaux des notes composant l'accord */
 	double[] signal ;
 	
-	/** Nombre de notes présentes dans l'accord */
-	int nbNotes = 0;
-
-	/**
+	/** Constructeur de la classe Accord. 
+	 * Initialise l'accord avec la note passee en parametre
 	 * 
-	 * @param note1
+	 * @param note1 premiere note de l'accord
 	 */
 	public Accord(Note note1) {
 		this.notes = new Note[4] ;
@@ -35,9 +30,9 @@ public class Accord {
 		this.signal = note1.signal.clone() ;
 	}
 	
-	/**
+	/** Ajoute la note en parametre à l'accord et reequilibre le signal de ce dernier
 	 * 
-	 * @param not
+	 * @param not note a ajouter a l'accord
 	 */
 	public void addNote(Note not) {
 		this.notes[this.nbNotes] = not;
@@ -52,10 +47,17 @@ public class Accord {
 		}
 	}
 	
-	/**
-	 * 
-	 */
+	/** Joue sur la sortie audio cet accord	 */
 	public void play() {
 		StdAudio.play(this.signal);
+	}
+	
+	/** Methode main() de test de la classe Accord
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		//TODO
 	}
 }

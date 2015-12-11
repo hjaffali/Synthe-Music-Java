@@ -6,77 +6,53 @@ import java.util.Arrays;
 @SuppressWarnings({"nls"})
 public class Note {
 
-	/**
-	 * 
-	 */
+	/** Tableau des frequences fondamentales pour les 8 octaves */
 	public final static double[] fondFreq = {32.70, 65.41, 130.81, 261.63, 523.25, 1046.50, 2093.00, 4186.01};
 
-	/**
-	 * 
-	 */
+	/** Tableau des 7 tons de bases en musique */
 	public final static String[] tons = {"do", "re", "mi", "fa", "sol", "la", "si"};
 
-	/**
-	 * 
-	 */
+	/** Tableau des hauteurs respectives des tons de bases */
 	public final static int[] haut = {0, 2, 4, 5, 7, 9, 11};
 
-	/**
-	 * 
-	 */
+	/** Frequence d'echantillonage du signal */
 	public final static double echantillonageFreq = 44100f;
 
-	/**
-	 * 
-	 */
+	/** Ton de base de la note */
 	public String toneBase ;
 
-	/**
-	 * 
-	 */
+	/** Alteration de la note ('#' dieze, ou 'b' bemole) */
 	public char alter ;
 
-	/**
-	 * 
-	 */
+	/** Octave de la note */
 	public int octave ;
 
-	/**
-	 * 
-	 */
+	/** Frequence de la note */
 	public double freq ;
 
-	/**
-	 * 
-	 */
+	/** Duree de la note (en secondes) */
 	public double duree;
 
-	/**
-	 * 
-	 */
+	/** Amplitude de la note (volume) entre 0 et 1 */
 	public double amp;
 
-	/**
-	 * 
-	 */
+	/** Tableau contenant la suite des echantillons du signal de la note */
 	double[] signal ;
 
-	/**
+	/** Calcule la frequence d'une note a partir de la tonalite, de l'alteration et de l'octave.
 	 * 
-	 * @param toneBase
-	 * @param alter
-	 * @param octave
-	 * @return
+	 * @param toneBase tonalite de base de la note
+	 * @param alter alteration de la note (# ou b)
+	 * @param octave octave de la note
+	 * @return la frequence de la ntoe
 	 */
-	
-	//Fonctionne
 	private static double freqTone(String toneBase, char alter, int octave) {
-		//On repère déjà on est dans quelle octave comme ça on peut trouver le f0.
+		//On repère déjà dans quelle octave est la note, pour trouver le f0.
 		double f0 = Note.fondFreq[octave];
-		
-		//Ensuite on regarde on est à quelle note, comme ça on sait on est à quelle hauteur potentielle
+
+		//Ensuite on regarde quelle est la tonalité, afin de savoir à quelle hauteur potentielle est la note
 		int n = Note.haut[Arrays.asList(Note.tons).indexOf(toneBase)];
-		
+
 		//Enfin on regarde si il y a un dièze/bémole pour ajouter/enlever une hauteur.
 		if(alter=='#') {
 			n = n+1;
@@ -89,15 +65,15 @@ public class Note {
 		return f0 * Math.pow(2, n / 12.0);
 	}
 
-	/**
+	/** Construit et retourne une note en fonction de sa tonalite, son amplitude, sa duree,
+	 * et si l'on veut integrer les harmoniques au signal ou pas. 
 	 * 
-	 * @param tonalite
-	 * @param amplitude
-	 * @param duree
-	 * @param harmon
-	 * @return
+	 * @param tonalite tonalite de base, octave et alteration de la note
+	 * @param amplitude amplitude de la note entre 0 et 1
+	 * @param duree duree de la note en secondes
+	 * @param harmon <code>true</code> si l'on veut integrer les harmoniques au signal, <code>false</code> sinon.
+	 * @return nouvelle Note associée aux paramètres
 	 */
-	//FIXME : Il peut y a avoir un soucis ici, à vérifier, lorsqu'on ajoute les harmoniques
 	public static Note sToNote(String tonalite, double amplitude, double duree, boolean harmon) {
 		int octave=0;
 		char alteration=' ';
@@ -117,9 +93,9 @@ public class Note {
 				tonaliteBase = tonaliteBase.concat(""+tonalite.charAt(i));
 			}
 		}
-		
+
 		Note note = new Note(tonaliteBase, alteration, octave, duree, amplitude);
-		
+
 		if(harmon) {
 			for (int i=0; i<note.signal.length; i++) {
 				note.signal[i] += (note.amp/4f) * Math.sin(2 * Math.PI * i * (0.5*note.freq) / Note.echantillonageFreq);
@@ -127,15 +103,15 @@ public class Note {
 				note.signal[i] += (note.amp/8f) * Math.sin(2 * Math.PI * i * (3*note.freq) / Note.echantillonageFreq);
 			}
 		}
-		
+
 		return note;
 	}
 
-	/**
+	/** Retourne la duree d'une figure de note en fonction du tempo en parametre
 	 * 
-	 * @param figure
-	 * @param tempo
-	 * @return
+	 * @param figure figure de note
+	 * @param tempo tempo de la partition
+	 * @return duree de la figure en secondes
 	 */
 	public static double faceToDuration(String figure, int tempo) {
 		double dureeNoire = tempo/60f ;
@@ -158,16 +134,15 @@ public class Note {
 	}
 
 
-	/** Le constructeur permettant de déclarer/allouer une note par
+	/** Le constructeur permettant de declarer/allouer une note par
 	 * Note note = new Note(ton, alter, octave, duree, amplitude);
 	 * 
-	 * @param tB
-	 * @param alt
-	 * @param oct
-	 * @param dur
-	 * @param amp
+	 * @param tB ton de base 
+	 * @param alt alteration (dieze ou bemole)
+	 * @param oct octave
+	 * @param dur duree en secondes
+	 * @param amp amplitude de la note entre 0 et 1
 	 */
-	//Fonctionne
 	public Note(String tB, char alt, int oct, double dur, double amp){
 		this.duree = dur ;
 		this.alter = alt ;
@@ -186,9 +161,9 @@ public class Note {
 		}
 	}
 
-	/**
+	/** Constructeur par recopie de la class Note
 	 * 
-	 * @param oldNote
+	 * @param oldNote Note a copier
 	 */
 	public Note(Note oldNote) {
 		this.duree = oldNote.duree ;
@@ -200,16 +175,13 @@ public class Note {
 		this.signal = oldNote.signal.clone() ;
 	}
 
-	/**
-	 * 
-	 */
-	//Fontionne
+	/** Joue sur la sortie audio cette note */
 	public void play() {
 		StdAudio.play(this.signal);
 	}
 
 
-	/** Méthode main() de test de la classe Note
+	/** Methode main() de test de la classe Note
 	 * 
 	 * @param args
 	 */

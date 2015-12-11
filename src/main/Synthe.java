@@ -17,22 +17,16 @@ import java.util.Arrays;
 @SuppressWarnings({"nls","hiding","resource"})
 public class Synthe {
 
-	/**
-	 * 
-	 */
+	/** Actuel tempo de la partition */
 	public static int tempo ;
 
-	/**
-	 * 
-	 */
+	/** Booleen représentant l'ajout ou pas d'harmoniques au signal */
 	public static boolean harm = false ;
 
-	/**
-	 * 
-	 */
+	/** ??? */
 	public static boolean guitar = false ;
 
-	/**
+	/** Methode main() principale du projet Synthe
 	 * 
 	 * @param args
 	 */
@@ -69,11 +63,11 @@ public class Synthe {
 	}
 
 	
-	/**
+	/** Methode qui joue usr la sortie audio la ligne du fichier partition passee parametre
 	 * 
-	 * @param ligne
-	 * @param harm
-	 * @param guitar
+	 * @param ligne chaine de caractere representant la ligne a jouer
+	 * @param harm boolean nous infdiquant si l'on doit ajouter les harmoniques au signal
+	 * @param guitar ???
 	 */
 	public static void playLigne(String ligne, boolean harm, boolean guitar) {
 		//On récupère chaque élément de la ligne entre chaque virgule
