@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Random;
+
 public class Accord {
 
 	/** Tableau contenant toutes les notes de l'accord (4 au maximum) */
@@ -57,7 +59,27 @@ public class Accord {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		Random random = new Random();
 		
-		//TODO
+		while(true) {
+			int nbNotes = random.nextInt()%4;
+			
+			int randomOctave = Math.abs(random.nextInt())%8;
+			int randomNote = Math.abs(random.nextInt())%7;
+
+			Accord accord = new Accord(new Note(Note.tons[randomNote],' ',randomOctave,Note.faceToDuration("croche", 50),1));
+			
+			for (int i=1;i<nbNotes;i++) {
+				randomOctave = Math.abs(random.nextInt())%8;
+				randomNote = Math.abs(random.nextInt())%7;
+				accord.addNote(new Note(Note.tons[randomNote],' ',randomOctave,Note.faceToDuration("croche", 50),1));
+			}
+			
+			accord.play();
+		}
+		
+	
+		
+		
 	}
 }
