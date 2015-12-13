@@ -55,31 +55,27 @@ public class Accord {
 	}
 	
 	/** Methode main() de test de la classe Accord
+	 * Joue une série d'accords aléatoires
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		Random random = new Random();
+		final int octave = 3;
 		
 		while(true) {
-			int nbNotes = random.nextInt()%4;
-			
-			int randomOctave = Math.abs(random.nextInt())%8;
+			int nbNotes = Math.abs(random.nextInt())%4;
 			int randomNote = Math.abs(random.nextInt())%7;
 
-			Accord accord = new Accord(new Note(Note.tons[randomNote],' ',randomOctave,Note.faceToDuration("croche", 50),1));
+			Accord accord = new Accord(new Note(Note.tons[randomNote],' ',octave,Note.faceToDuration("croche", 60),1));
 			
 			for (int i=1;i<nbNotes;i++) {
-				randomOctave = Math.abs(random.nextInt())%8;
 				randomNote = Math.abs(random.nextInt())%7;
-				accord.addNote(new Note(Note.tons[randomNote],' ',randomOctave,Note.faceToDuration("croche", 50),1));
+				accord.addNote(new Note(Note.tons[randomNote],' ',octave,Note.faceToDuration("croche", 60),1));
 			}
 			
 			accord.play();
 		}
-		
-	
-		
-		
 	}
+	
 }

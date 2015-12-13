@@ -114,7 +114,7 @@ public class Note {
 	 * @return duree de la figure en secondes
 	 */
 	public static double faceToDuration(String figure, int tempo) {
-		double dureeNoire = tempo/60f ;
+		double dureeNoire = 60f/(tempo*1f) ;
 
 		switch(figure) {
 		case("double-croche") :
@@ -124,12 +124,12 @@ public class Note {
 		case("noire") :
 			return dureeNoire;
 		case("blanche") :
-			return dureeNoire*2;
+			return dureeNoire*2f;
 		case("ronde") :
-			return dureeNoire*4;
+			return dureeNoire*4f;
 		default :
 			System.err.println("Figure inconnue");
-			return 0;
+			return Double.NaN;
 		}
 	}
 
